@@ -13,8 +13,8 @@ public class User {
     private Integer user_id;
 
     @Column(unique = true)
-    private String user_login_id;
+    private String userLoginId;
 
-    private String user_login_pw;
-    private String user_email;
+    private String userLoginPw;
+    private String userEmail;
 }

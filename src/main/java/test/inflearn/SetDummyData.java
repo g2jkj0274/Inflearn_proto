@@ -75,9 +75,9 @@ public class SetDummyData implements CommandLineRunner {
     // 더미 유저 생성
     private void createUser(String userId) {
         User user = new User();
-        user.setUser_login_id(userId);
-        user.setUser_login_pw(userId); // 로그인 ID와 PW는 동일하게 설정
-        user.setUser_email(userId + "@example.com"); // 간단한 이메일 주소 설정
+        user.setUserLoginId(userId);
+        user.setUserLoginPw(userId); // 로그인 ID와 PW는 동일하게 설정
+        user.setUserEmail(userId + "@example.com"); // 간단한 이메일 주소 설정
 
         userRepository.save(user);
     }
