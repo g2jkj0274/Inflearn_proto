@@ -17,8 +17,8 @@
     <tbody>
     <tr th:each="lecture : ${lectures}">
         <td th:text="${lecture.lecture_id}"></td>
-        <td th:text="${lecture.title}"></td>
-        <td th:text="${lecture.body}"></td>
+        <td><a th:href="@{'/lectures/' + ${lecture.lecture_id}}" th:text="${lecture.title}"></a></td>
+        <td><a th:href="@{'/lectures/' + ${lecture.lecture_id}}" th:text="${lecture.body}"></a></td>
     </tr>
     </tbody>
 </table>

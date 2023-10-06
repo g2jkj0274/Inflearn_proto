@@ -21,7 +21,14 @@ public class LectureService {
         return lectureRepository.save(lecture);
     }
 
+    // 강의 리스트
     public List<Lecture> getAllLectures() {
         return lectureRepository.findAll();
     }
+
+    // 강의 디테일
+    public Lecture getLectureById(Integer id) {
+        return lectureRepository.findById(id).orElse(null);
+    }
+
 }
