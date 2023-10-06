@@ -7,5 +7,15 @@
 <body>
 <h1 th:text="${lecture.title}"></h1>
 <p th:text="${lecture.body}"></p>
+
+<h2>Videos</h2>
+<ul>
+    <!-- 강의에 포함된 모든 영상을 반복하여 목록에 표시 -->
+    <li th:each="video : ${lecture.lecture_Video}"> <!-- lecture_Video 필드에 맞게 업데이트 -->
+        <span th:text="${video.title}"></span>
+        <!-- 비디오 링크가 있다면 이를 표시 (옵션) -->
+        <a th:href="${video.video_url}" th:text="${video.video_url}"></a>
+    </li>
+</ul>
 </body>
 </html>
