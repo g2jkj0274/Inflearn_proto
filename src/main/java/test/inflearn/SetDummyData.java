@@ -60,6 +60,10 @@ public class SetDummyData implements CommandLineRunner {
     private void addVideoForLecture(Lecture lecture) {
         for (int i = 1; i <= 3; i++) {
             Lecture_Video lecture_Video = new Lecture_Video();
+
+            // Lecture_Video_id 값을 설정
+            lecture_Video.setLecture_Video_id(i);
+
             lecture_Video.setLecture(lecture);
             lecture_Video.setTitle("Video " + i + " for " + lecture.getTitle());
             lecture_Video.setVideo_url("url_for_video_" + i + "_of_" + lecture.getTitle());
