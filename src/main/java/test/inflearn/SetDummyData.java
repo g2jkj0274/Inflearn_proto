@@ -7,19 +7,24 @@ import test.inflearn.lecture.Lecture;
 import test.inflearn.lecture.LectureRepository;
 import test.inflearn.lecture.Lecture_Video;
 import test.inflearn.lecture.Lecture_VideoRepository;
+import test.inflearn.user.User;
+import test.inflearn.user.UserRepository;
 
 @Component
 public class SetDummyData implements CommandLineRunner {
 
     private final LectureRepository lectureRepository;
     private final Lecture_VideoRepository lecture_VideoRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SetDummyData(LectureRepository lectureRepository, Lecture_VideoRepository lecture_VideoRepository) {
+    public SetDummyData(LectureRepository lectureRepository, Lecture_VideoRepository lecture_VideoRepository, UserRepository userRepository) {
         this.lectureRepository = lectureRepository;
         this.lecture_VideoRepository = lecture_VideoRepository;
+        this.userRepository = userRepository;
     }
 
+    // 강의 생성
     @Override
     public void run(String... args) throws Exception {
         // Dummy 1
@@ -44,6 +49,11 @@ public class SetDummyData implements CommandLineRunner {
         addVideoForLecture(lecture1);
         addVideoForLecture(lecture2);
         addVideoForLecture(lecture3);
+
+        // 유저 더미 데이터 생성
+        createUser("u1");
+        createUser("u2");
+        createUser("u3");
     }
 
     // 강의마다 3개의 더미 영상 생성
@@ -56,5 +66,15 @@ public class SetDummyData implements CommandLineRunner {
 
             lecture_VideoRepository.save(lecture_Video);
         }
+    }
+
+    // 더미 유저 생성
+    private void createUser(String userId) {
+        User user = new User();
+        user.setUser_login_id(userId);
+        user.setUser_login_pw(userId); // 로그인 ID와 PW는 동일하게 설정
+        user.setUser_email(userId + "@example.com"); // 간단한 이메일 주소 설정
+
+        userRepository.save(user);
     }
 }
