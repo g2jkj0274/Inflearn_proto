@@ -14,7 +14,7 @@ public class Lecture_Video {
     private Integer video_id;
 
     // 해당 되는 강의 영상의 id
-    private Integer Lecture_Video_id;
+    private Integer lecture_video_id;
 
     // 강의와의 관계 설정. 각각의 영상은 하나의 강의에 속한다.
     @ManyToOne

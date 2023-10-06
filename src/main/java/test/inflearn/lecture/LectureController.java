@@ -36,7 +36,7 @@ public class LectureController {
     public String getLectureDetail(@PathVariable Integer id, Model model) {
         Lecture lecture = lectureService.getLectureById(id);
         model.addAttribute("lecture", lecture);
-        return "lecture_detail";  // lectureDetail.html 파일을 찾아서 반환
+        return "lecture_detail";  // lecture_detail.html 파일을 찾아서 반환
     }
 
 }

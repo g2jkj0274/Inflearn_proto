@@ -23,5 +23,5 @@ public class Lecture {
 
     // 강의와 관련된 비디오들의 리스트
     @OneToMany(mappedBy = "lecture")
-    private List<Lecture_Video> lecture_Video;
+    private List<Lecture_Video> lecture_videoList;
 }
