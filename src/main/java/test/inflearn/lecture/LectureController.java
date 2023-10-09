@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class LectureController {
 
     private final LectureService lectureService;
+    @Autowired
+    private Lecture_VideoService  lectureVideoService;
 
     @Autowired
     public LectureController(LectureService lectureService) {
@@ -39,4 +41,11 @@ public class LectureController {
         return "lecture_detail";  // lecture_detail.html 파일을 찾아서 반환
     }
 
+    // 영상 디테일 페이지 메서드 추가
+    @GetMapping("/videos/{videoId}")
+    public String getVideoDetail(@PathVariable Integer videoId, Model model) {
+        Lecture_Video video = lectureVideoService.getVideoById(videoId);
+        model.addAttribute("video", video);
+        return "video_detail";  // video_detail.html 파일을 찾아서 반환
+    }
 }

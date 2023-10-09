@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Detail</title>
+</head>
+<body>
+
+<h1 th:text="${video.title}"></h1>
+<!-- 이곳에 비디오 플레이어 삽입 가능 -->
+
+<a th:href="${video.video_url}" th:text="${video.video_url}"></a>
+
+</body>
+</html>
