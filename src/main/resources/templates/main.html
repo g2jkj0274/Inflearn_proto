@@ -7,10 +7,19 @@
 <body>
 
 <h1>Main Page</h1>
+
+<!-- 로그인된 사용자의 이름 (또는 다른 관련 정보) 표시 -->
+<h3 th:if="${session.user}" th:text="'Logged in as: ' + ${session.user.userLoginId}"></h3>
+
 <!-- 회원가입 및 로그인 버튼 추가 -->
 <div class="auth-buttons">
-    <button onclick="window.location.href='/user/signup'">회원가입</button>
-    <button onclick="window.location.href='/user/login'">로그인</button>
+    <!-- 로그인되지 않았을 때만 회원가입 및 로그인 버튼을 보여줍니다. -->
+    <button th:unless="${session.user}" onclick="window.location.href='/user/signup'">회원가입</button>
+    <button th:unless="${session.user}" onclick="window.location.href='/user/login'">로그인</button>
+
+    <!-- 로그인 되었을 때 마이페이지 및 로그아웃 버튼을 보여줍니다. -->
+    <button th:if="${session.user}" onclick="window.location.href='/user/mypage'">마이페이지(미구현)</button>
+    <button th:if="${session.user}" onclick="window.location.href='/user/logout'">로그아웃</button>
 </div>
 <table>
     <thead>

@@ -72,7 +72,7 @@ public class SetDummyData implements CommandLineRunner {
         }
     }
 
-    // 더미 유저 생성
+    // 더미 유저 생성 로직
     private void createUser(String userId) {
         User user = new User();
         user.setUserLoginId(userId);

@@ -16,11 +16,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean validateUser(String userLoginId, String userLoginPw) {
+    // 변경된 부분: 로그인 검증 메서드가 User 객체를 반환합니다.
+    public User validateAndReturnUser(String userLoginId, String userLoginPw) {
         User user = userRepository.findByUserLoginId(userLoginId);
         if (user != null && user.getUserLoginPw().equals(userLoginPw)) {
-            return true;
+            return user;  // 로그인 성공
         }
-        return false;
+        return null;  // 로그인 실패
     }
 }
