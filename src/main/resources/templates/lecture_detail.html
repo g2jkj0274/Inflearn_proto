@@ -20,8 +20,23 @@
     </li>
 </ul>
 
-<!--강의에 대한 댓글-->
-<h2>Comment</h2>
+<!-- 강의에 대한 댓글 -->
+<h2>Comments</h2>
+<ul th:each="comment : ${comments}">
+    <li>
+        <p th:text="${comment.comment_body}"></p>
+        <p>Rating: <span th:text="${comment.star_rating}"></span></p>
+    </li>
+</ul>
+
+<!-- 댓글 작성 폼 -->
+<form th:action="@{/lectures/{id}/comments(id=${lecture.lecture_id})}" method="post">
+    <textarea name="comment_body" placeholder="Write your comment"></textarea>
+    <br>
+    Rating: <input type="number" name="star_rating" min="1" max="5">
+    <br>
+    <button type="submit">Submit</button>
+</form>
 
 
 </body>
