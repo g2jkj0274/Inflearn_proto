@@ -11,7 +11,6 @@
 <body>
 
 <h1 th:text="${video.title}"></h1>
-<!-- 이곳에 비디오 플레이어 삽입 가능 -->
 <a th:href="${video.videoUrl}" th:text="${video.videoUrl}"></a>
 
 <!-- 기능 버튼 -->
@@ -23,15 +22,19 @@
 
 <h4>Curriculum Videos</h4>
 <ul>
-    <!-- 강의에 포함된 모든 영상을 반복하여 목록에 표시 -->
     <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
-        <!-- 영상의 제목을 클릭하면 해당 영상의 상세 페이지로 이동 -->
         <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
     </li>
 </ul>
 
 <!-- TOAST UI Editor container -->
 <div id="toast-editor"></div>
+
+<!-- Save Note Button -->
+<button id="save-note">노트입력</button>
+
+<!-- List of saved notes -->
+<ul id="notes-list"></ul>
 
 <!-- JS Dependencies for TOAST UI Editor -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
@@ -41,6 +44,26 @@
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         height: '400px'
+    });
+
+    // Store saved notes in an array
+    const savedNotes = [];
+
+    document.querySelector("#save-note").addEventListener("click", function() {
+        // Get content from the editor
+        const noteContent = editor.getMarkdown();
+
+        // Add content to the saved notes array
+        savedNotes.push(noteContent);
+
+        // Update the notes list
+        const notesList = document.querySelector("#notes-list");
+        notesList.innerHTML = ""; // Clear the existing list
+        savedNotes.forEach(note => {
+            const listItem = document.createElement("li");
+            listItem.textContent = note;
+            notesList.appendChild(listItem);
+        });
     });
 </script>
 </body>
