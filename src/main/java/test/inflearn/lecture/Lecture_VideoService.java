@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Lecture_VideoService {
-
     private final Lecture_VideoRepository lectureVideoRepository;
 
     @Autowired
@@ -13,7 +12,7 @@ public class Lecture_VideoService {
         this.lectureVideoRepository = lectureVideoRepository;
     }
 
-    public Lecture_Video getVideoById(Integer videoId) {
-        return lectureVideoRepository.findById(videoId).orElse(null);
+    public Lecture_Video getVideoByLectureIdAndVideoId(Integer lectureId, Integer videoId) {
+        return lectureVideoRepository.findByLectureLectureIdAndLectureVideoId(lectureId, videoId).orElse(null);
     }
 }

@@ -34,9 +34,9 @@
     </thead>
     <tbody>
     <tr th:each="lecture : ${lectures}">
-        <td th:text="${lecture.lecture_id}"></td>
-        <td><a th:href="@{'/lectures/' + ${lecture.lecture_id}}" th:text="${lecture.title}"></a></td>
-        <td><a th:href="@{'/lectures/' + ${lecture.lecture_id}}" th:text="${lecture.body}"></a></td>
+        <td th:text="${lecture.lectureId}"></td>
+        <td><a th:href="@{'/lectures/' + ${lecture.lectureId}}" th:text="${lecture.title}"></a></td>
+        <td><a th:href="@{'/lectures/' + ${lecture.lectureId}}" th:text="${lecture.body}"></a></td>
     </tr>
     </tbody>
 </table>

@@ -32,9 +32,9 @@
 <h2>Videos</h2>
 <ul>
     <!-- 강의에 포함된 모든 영상을 반복하여 목록에 표시 -->
-    <li th:each="video : ${lecture.lecture_videoList}">
+    <li th:each="video : ${lecture.lectureVideoList}">
         <!-- 영상의 제목을 클릭하면 해당 영상의 상세 페이지로 이동 -->
-        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${lecture.lecture_id}, videoId=${video.lecture_video_id})}" th:text="${video.title}"></a>
+        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${lecture.lectureId}, videoId=${video.lectureVideoId})}" th:text="${video.title}"></a>
         <!--url은 아직 사용 안함.-->
         <!--<span th:text="${video.video_url}"></span>-->
     </li>
@@ -53,7 +53,7 @@
 </ul>
 
 <!-- 댓글 작성 폼 -->
-<form th:action="@{/lectures/{id}/comments(id=${lecture.lecture_id})}" method="post">
+<form th:action="@{/lectures/{id}/comments(id=${lecture.lectureId})}" method="post">
     <textarea name="comment_body" placeholder="Write your comment"></textarea>
     <br>
     <div class="rating"> <!-- 별점 시각화 -->
