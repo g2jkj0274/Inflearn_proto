@@ -46,7 +46,7 @@
 <h4 th:if="${session.user}" th:text="'Logged in as: ' + ${session.user.userLoginId}"></h4>
 <ul th:each="comment : ${comments}">
     <li>
-        <strong th:text="${comment.user_id} + ' says:'"></strong> <!-- 작성자를 user_id로 변경 -->
+        <strong th:text="${comment.user.userLoginId} + ' says:'"></strong>
         <p th:text="${comment.comment_body}"></p>
         <p>Rating: <span th:text="${comment.star_rating}"></span></p>
     </li>

@@ -14,8 +14,9 @@ public class User_Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer comment_id;
 
-    // User와의 관계를 설정하려면 이 부분도 수정해야 하지만 지금은 간단히 구현
-    private Integer user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "Lecture_id")
