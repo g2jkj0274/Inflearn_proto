@@ -3,6 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Lecture Detail</title>
+    <style>
+        /* 별점 스타일 */
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            align-items: center;
+        }
+        .rating > input {
+            display: none;
+        }
+        .rating > label {
+            font-size: 2em;
+            color: gray;
+            cursor: pointer;
+        }
+        .rating > input:checked ~ label {
+            color: gold;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,6 +44,7 @@
 <h2>Comments</h2>
 <ul th:each="comment : ${comments}">
     <li>
+        <strong th:text="${comment.user_id} + ' says:'"></strong> <!-- 작성자를 user_id로 변경 -->
         <p th:text="${comment.comment_body}"></p>
         <p>Rating: <span th:text="${comment.star_rating}"></span></p>
     </li>
@@ -33,11 +54,21 @@
 <form th:action="@{/lectures/{id}/comments(id=${lecture.lecture_id})}" method="post">
     <textarea name="comment_body" placeholder="Write your comment"></textarea>
     <br>
-    Rating: <input type="number" name="star_rating" min="1" max="5">
+    <div class="rating"> <!-- 별점 시각화 -->
+        <input type="radio" name="star_rating" value="5" id="rating5">
+        <label for="rating5">★</label>
+        <input type="radio" name="star_rating" value="4" id="rating4">
+        <label for="rating4">★</label>
+        <input type="radio" name="star_rating" value="3" id="rating3">
+        <label for="rating3">★</label>
+        <input type="radio" name="star_rating" value="2" id="rating2">
+        <label for="rating2">★</label>
+        <input type="radio" name="star_rating" value="1" id="rating1">
+        <label for="rating1">★</label>
+    </div>
     <br>
     <button type="submit">Submit</button>
 </form>
-
 
 </body>
 </html>
