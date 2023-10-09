@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Video Detail</title>
+    <!-- CSS for TOAST UI Editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css" />
 </head>
 <body>
 
@@ -25,5 +29,19 @@
         <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
     </li>
 </ul>
+
+<!-- TOAST UI Editor container -->
+<div id="toast-editor"></div>
+
+<!-- JS Dependencies for TOAST UI Editor -->
+<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+<script>
+    const editor = new tui.Editor({
+        el: document.querySelector('#toast-editor'),
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        height: '400px'
+    });
+</script>
 </body>
 </html>
