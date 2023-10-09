@@ -48,16 +48,4 @@ public class LectureController {
         model.addAttribute("comments", comments); // 이 부분을 추가
         return "lecture_detail";
     }
-
-    // 영상 디테일 페이지 메서드 추가
-    @GetMapping("/lectures/{lectureId}/videos/{videoId}")
-    public String getVideoDetail(
-            @PathVariable Integer lectureId, // 추가된 파라미터
-            @PathVariable Integer videoId,
-            Model model) {
-        Lecture_Video video = lectureVideoService.getVideoById(videoId);
-        model.addAttribute("video", video);
-        // 필요하다면 lectureId를 사용하여 추가 로직을 수행할 수 있습니다.
-        return "video_detail";  // video_detail.html 파일을 찾아서 반환
-    }
 }
