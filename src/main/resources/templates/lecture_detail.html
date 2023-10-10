@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Lecture Detail</title>
+    <!-- 별점 스타일 -->
     <style>
-        /* 별점 스타일 */
         .rating {
             display: flex;
             flex-direction: row-reverse;
@@ -44,11 +44,24 @@
 <h2>Comments</h2>
 <!-- 로그인된 사용자의 이름 (또는 다른 관련 정보) 표시 -->
 <h4 th:if="${session.user}" th:text="'Logged in as: ' + ${session.user.userLoginId}"></h4>
+
+<!-- 댓글 리스트 -->
 <ul th:each="comment : ${comments}">
     <li>
         <strong th:text="${comment.user.userLoginId} + ' says:'"></strong>
         <p th:text="${comment.comment_body}"></p>
-        <p>Rating: <span th:text="${comment.star_rating}"></span></p>
+        <div class="rating">
+            <input type="radio" disabled="true" th:checked="${comment.star_rating == 5}">
+            <label>★</label>
+            <input type="radio" disabled="true" th:checked="${comment.star_rating == 4}">
+            <label>★</label>
+            <input type="radio" disabled="true" th:checked="${comment.star_rating == 3}">
+            <label>★</label>
+            <input type="radio" disabled="true" th:checked="${comment.star_rating == 2}">
+            <label>★</label>
+            <input type="radio" disabled="true" th:checked="${comment.star_rating == 1}">
+            <label>★</label>
+        </div>
     </li>
 </ul>
 
