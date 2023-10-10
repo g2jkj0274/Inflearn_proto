@@ -46,23 +46,27 @@
         height: '400px'
     });
 
-    // Store saved notes in an array
-    const savedNotes = [];
-
     document.querySelector("#save-note").addEventListener("click", function() {
         // Get content from the editor
         const noteContent = editor.getMarkdown();
 
-        // Add content to the saved notes array
-        savedNotes.push(noteContent);
-
-        // Update the notes list
-        const notesList = document.querySelector("#notes-list");
-        notesList.innerHTML = ""; // Clear the existing list
-        savedNotes.forEach(note => {
-            const listItem = document.createElement("li");
-            listItem.textContent = note;
-            notesList.appendChild(listItem);
+        // Send the note content to the server
+        fetch('/api/notes/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: noteContent })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Note saved successfully") {
+                // Assuming you want to display the saved note locally after saving
+                const notesList = document.querySelector("#notes-list");
+                const listItem = document.createElement("li");
+                listItem.textContent = noteContent;
+                notesList.appendChild(listItem);
+            }
         });
     });
 </script>
