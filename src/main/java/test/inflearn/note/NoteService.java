@@ -2,8 +2,6 @@ package test.inflearn.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.inflearn.note.Note;
-import test.inflearn.note.NoteRepository;
 
 @Service
 public class NoteService {
@@ -11,9 +9,7 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
-    public Note save(String content) {
-        Note note = new Note();
-        note.setContent(content);
+    public Note save(Note note) {
         return noteRepository.save(note);
     }
 

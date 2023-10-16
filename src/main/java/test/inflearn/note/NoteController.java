@@ -15,8 +15,8 @@ public class NoteController {
     private NoteService noteService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveNote(@RequestBody String markdownContent) {
-        noteService.save(markdownContent);
+    public ResponseEntity<String> saveNote(@RequestBody Note note) {
+        noteService.save(note);
         return ResponseEntity.ok("Note saved successfully");
     }
 }

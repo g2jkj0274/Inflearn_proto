@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Video Detail</title>
-    <!-- CSS for TOAST UI Editor -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css" />
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css" />
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css" />
@@ -13,11 +12,10 @@
 <h1 th:text="${video.title}"></h1>
 <a th:href="${video.videoUrl}" th:text="${video.videoUrl}"></a>
 
-<!-- 기능 버튼 아직 미구현 -->
 <div>
     <button>커리큘럼</button>
-    <button>커뮤니티(QnA)</button>
-    <button>노트</button>
+    <button id="show-qna">커뮤니티(QnA)</button> <!-- Button to show QnA section -->
+    <button id="show-notes">노트</button>
 </div>
 
 <h4>Curriculum Videos</h4>
@@ -27,16 +25,26 @@
     </li>
 </ul>
 
-<!-- TOAST UI Editor container -->
-<div id="toast-editor"></div>
+<!-- QnA Section -->
+<div id="qna-section" style="display: none;">
+    <h4>QnA</h4>
 
-<!-- Save Note Button -->
-<button id="save-note">노트입력</button>
+    <!-- QnA List -->
+    <ul id="qna-list"></ul>
 
-<!-- List of saved notes -->
-<ul id="notes-list"></ul>
+    <!-- TOAST UI Editor for QnA -->
+    <div id="toast-qna-editor"></div>
+    <button id="post-question">질문 작성</button>
+</div>
 
-<!-- JS Dependencies for TOAST UI Editor -->
+<!-- Note Section -->
+<div id="notes-section" style="display: none;"> <!-- Note section added -->
+    <h4>Notes</h4>
+    <div id="toast-editor"></div>
+    <button id="save-note">노트입력</button>
+    <ul id="notes-list"></ul>
+</div>
+
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
 <script>
     const editor = new tui.Editor({
@@ -47,28 +55,62 @@
     });
 
     document.querySelector("#save-note").addEventListener("click", function() {
-        // Get content from the editor
         const noteContent = editor.getMarkdown();
+        saveNote(noteContent);
+    });
 
-        // Send the note content to the server
+    document.querySelector("#post-question").addEventListener("click", function() {
+        const questionContent = document.querySelector("#qna-input").value;
+        saveQuestion(questionContent);
+    });
+
+    document.querySelector("#show-qna").addEventListener("click", function() {
+        const qnaSection = document.querySelector("#qna-section");
+        qnaSection.style.display = (qnaSection.style.display === "none") ? "block" : "none";
+    });
+
+    document.querySelector("#show-notes").addEventListener("click", function() {
+        const notesSection = document.querySelector("#notes-section");
+        notesSection.style.display = (notesSection.style.display === "none") ? "block" : "none";
+    });
+
+    function saveNote(content) {
         fetch('/api/notes/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ content: noteContent })
+            body: JSON.stringify({ content: content })
         })
         .then(response => response.json())
         .then(data => {
             if (data.message === "Note saved successfully") {
-                // Assuming you want to display the saved note locally after saving
                 const notesList = document.querySelector("#notes-list");
                 const listItem = document.createElement("li");
-                listItem.textContent = noteContent;
+                listItem.textContent = content;
                 notesList.appendChild(listItem);
             }
         });
-    });
+    }
+
+    function saveQuestion(content) {
+        fetch('/api/questions/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: content })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Question saved successfully") {
+                const qnaList = document.querySelector("#qna-list");
+                const listItem = document.createElement("li");
+                listItem.textContent = content;
+                qnaList.appendChild(listItem);
+            }
+        });
+    }
 </script>
 </body>
 </html>
