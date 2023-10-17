@@ -21,9 +21,15 @@
 <h4>Curriculum Videos</h4>
 <ul>
     <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
-        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
+        <!-- 원래의 <a> 태그 부분을 삭제하고 아래의 <video> 태그로 대체 -->
+        <video controls>
+            <source th:src="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" type="video/mp4">
+        </video>
+        <!-- 비디오 제목 표시 -->
+        <span th:text="${curriculumVideo.title}"></span>
     </li>
 </ul>
+
 
 <!-- QnA Section -->
 <div id="qna-section" style="display: none;">
@@ -45,8 +51,11 @@
     <ul id="notes-list"></ul>
 </div>
 
+<!-- TUI 에디터 라이브러리 로딩 -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+
 <script>
+    <!-- TUI 에디터 설정 및 초기화 -->
     const editor = new tui.Editor({
         el: document.querySelector('#toast-editor'),
         initialEditType: 'markdown',
@@ -54,26 +63,31 @@
         height: '400px'
     });
 
+    <!-- "저장" 버튼 클릭 시 에디터의 내용을 가져와 노트 저장 함수 호출 -->
     document.querySelector("#save-note").addEventListener("click", function() {
         const noteContent = editor.getMarkdown();
         saveNote(noteContent);
     });
 
+    <!-- "질문 게시" 버튼 클릭 시 입력값을 가져와 질문 저장 함수 호출 -->
     document.querySelector("#post-question").addEventListener("click", function() {
         const questionContent = document.querySelector("#qna-input").value;
         saveQuestion(questionContent);
     });
 
+    <!-- "QnA 보기" 버튼 클릭 시 QnA 섹션의 가시성 전환 -->
     document.querySelector("#show-qna").addEventListener("click", function() {
         const qnaSection = document.querySelector("#qna-section");
         qnaSection.style.display = (qnaSection.style.display === "none") ? "block" : "none";
     });
 
+    <!-- "노트 보기" 버튼 클릭 시 노트 섹션의 가시성 전환 -->
     document.querySelector("#show-notes").addEventListener("click", function() {
         const notesSection = document.querySelector("#notes-section");
         notesSection.style.display = (notesSection.style.display === "none") ? "block" : "none";
     });
 
+    <!-- 노트 저장 함수: 서버에 노트 내용 전송 및 저장 성공 시 목록에 추가 -->
     function saveNote(content) {
         fetch('/api/notes/save', {
             method: 'POST',
@@ -93,6 +107,7 @@
         });
     }
 
+    <!-- 질문 저장 함수: 서버에 질문 내용 전송 및 저장 성공 시 목록에 추가 -->
     function saveQuestion(content) {
         fetch('/api/questions/save', {
             method: 'POST',
