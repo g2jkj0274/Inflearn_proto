@@ -10,52 +10,42 @@
 <body>
 
 <h1 th:text="${video.title}"></h1>
-<a th:href="${video.videoUrl}" th:text="${video.videoUrl}"></a>
+<video controls width="100%" height="auto">
+    <source th:src="${video.videoUrl}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 
 <div>
     <button>커리큘럼</button>
-    <button id="show-qna">커뮤니티(QnA)</button> <!-- Button to show QnA section -->
+    <button id="show-qna">커뮤니티(QnA)</button>
     <button id="show-notes">노트</button>
 </div>
 
 <h4>Curriculum Videos</h4>
 <ul>
     <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
-        <!-- 원래의 <a> 태그 부분을 삭제하고 아래의 <video> 태그로 대체 -->
-        <video controls>
-            <source th:src="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" type="video/mp4">
-        </video>
-        <!-- 비디오 제목 표시 -->
-        <span th:text="${curriculumVideo.title}"></span>
+        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
     </li>
 </ul>
 
-
-<!-- QnA Section -->
 <div id="qna-section" style="display: none;">
     <h4>QnA</h4>
-
-    <!-- QnA List -->
     <ul id="qna-list"></ul>
-
-    <!-- TOAST UI Editor for QnA -->
     <div id="toast-qna-editor"></div>
     <button id="post-question">질문 작성</button>
 </div>
 
-<!-- Note Section -->
-<div id="notes-section" style="display: none;"> <!-- Note section added -->
+<div id="notes-section" style="display: none;">
     <h4>Notes</h4>
     <div id="toast-editor"></div>
     <button id="save-note">노트입력</button>
+    <h4>Note-list</h4>
     <ul id="notes-list"></ul>
 </div>
 
-<!-- TUI 에디터 라이브러리 로딩 -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
 
 <script>
-    <!-- TUI 에디터 설정 및 초기화 -->
     const editor = new tui.Editor({
         el: document.querySelector('#toast-editor'),
         initialEditType: 'markdown',
@@ -63,31 +53,32 @@
         height: '400px'
     });
 
-    <!-- "저장" 버튼 클릭 시 에디터의 내용을 가져와 노트 저장 함수 호출 -->
     document.querySelector("#save-note").addEventListener("click", function() {
         const noteContent = editor.getMarkdown();
         saveNote(noteContent);
+
+        // Add note to the notes list directly
+        const notesList = document.querySelector("#notes-list");
+        const listItem = document.createElement("li");
+        listItem.textContent = noteContent;
+        notesList.appendChild(listItem);
     });
 
-    <!-- "질문 게시" 버튼 클릭 시 입력값을 가져와 질문 저장 함수 호출 -->
     document.querySelector("#post-question").addEventListener("click", function() {
         const questionContent = document.querySelector("#qna-input").value;
         saveQuestion(questionContent);
     });
 
-    <!-- "QnA 보기" 버튼 클릭 시 QnA 섹션의 가시성 전환 -->
     document.querySelector("#show-qna").addEventListener("click", function() {
         const qnaSection = document.querySelector("#qna-section");
         qnaSection.style.display = (qnaSection.style.display === "none") ? "block" : "none";
     });
 
-    <!-- "노트 보기" 버튼 클릭 시 노트 섹션의 가시성 전환 -->
     document.querySelector("#show-notes").addEventListener("click", function() {
         const notesSection = document.querySelector("#notes-section");
         notesSection.style.display = (notesSection.style.display === "none") ? "block" : "none";
     });
 
-    <!-- 노트 저장 함수: 서버에 노트 내용 전송 및 저장 성공 시 목록에 추가 -->
     function saveNote(content) {
         fetch('/api/notes/save', {
             method: 'POST',
@@ -99,15 +90,11 @@
         .then(response => response.json())
         .then(data => {
             if (data.message === "Note saved successfully") {
-                const notesList = document.querySelector("#notes-list");
-                const listItem = document.createElement("li");
-                listItem.textContent = content;
-                notesList.appendChild(listItem);
+                console.log("Note saved to the database");
             }
         });
     }
 
-    <!-- 질문 저장 함수: 서버에 질문 내용 전송 및 저장 성공 시 목록에 추가 -->
     function saveQuestion(content) {
         fetch('/api/questions/save', {
             method: 'POST',
