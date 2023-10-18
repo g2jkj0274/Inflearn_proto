@@ -11,6 +11,12 @@
         body {
             background-color: white;
         }
+        /* 가로 선을 스타일링하기 위한 CSS */
+        .horizontal-line {
+            border: none;
+            border-top: 2px solid #000; /* 두께와 색상을 원하는 값으로 조정할 수 있습니다. */
+            margin: 10px 0; /* 원하는 간격을 설정할 수 있습니다. */
+        }
     </style>
 </head>
 <body>
@@ -26,6 +32,7 @@
     <button id="show-qna">커뮤니티(QnA)</button>
     <button id="show-notes">노트</button>
 </div>
+<div class="horizontal-line"></div>
 
 <h4>Curriculum Videos</h4>
 <ul>
@@ -33,6 +40,7 @@
         <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
     </li>
 </ul>
+<div class="horizontal-line"></div>
 
 <div id="qna-section" style="display: none;">
     <h4>QnA</h4>
@@ -40,14 +48,17 @@
     <div id="toast-qna-editor"></div>
     <button id="post-question">질문 작성</button>
 </div>
+<div class="horizontal-line"></div>
 
 <div id="notes-section" style="display: none;">
     <h4>Notes</h4>
     <div id="toast-editor"></div>
+    <br>
     <button id="save-note">노트입력</button>
     <h4>Note-list</h4>
     <ul id="notes-list"></ul>
 </div>
+<div class="horizontal-line"></div>
 
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
 
@@ -140,6 +151,7 @@
         });
     });
 </script>
+<div class="horizontal-line"></div>
 
 </body>
 </html>
