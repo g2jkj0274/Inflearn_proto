@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css" />
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css" />
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css" />
+
+    <style>
+        body {
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -114,5 +120,26 @@
         });
     }
 </script>
+
+<!-- html2canvas 라이브러리 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+<script>
+    // 페이지 내에 캡처 버튼 추가
+    const captureButton = document.createElement('button');
+    captureButton.textContent = '페이지 캡처';
+    document.body.appendChild(captureButton);
+
+    // 캡처 버튼 클릭 이벤트 핸들러 설정
+    captureButton.addEventListener('click', function() {
+        html2canvas(document.body).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'page-screenshot.png';
+            link.click();
+        });
+    });
+</script>
+
 </body>
 </html>
