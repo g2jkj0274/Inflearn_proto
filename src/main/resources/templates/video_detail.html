@@ -18,14 +18,25 @@
             margin: 10px 0; /* 원하는 간격을 설정할 수 있습니다. */
         }
     </style>
+
+    <!-- DaisyUI & TailwindCSS -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.7/dist/full.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
 
+<!--
 <h1 th:text="${video.title}"></h1>
 <video controls width="100%" height="auto">
     <source th:src="${video.videoUrl}" type="video/mp4">
     Your browser does not support the video tag.
 </video>
+-->
+<h1 th:text="${video.title}"></h1>
+<video controls width="50%" height="auto">
+    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+</video>
+<img src="https://picsum.photos/seed/picsum/200/300" alt="TestImage">
 
 <div>
     <button>커리큘럼</button>
@@ -57,6 +68,23 @@
     <button id="save-note">노트입력</button>
     <h4>Note-list</h4>
     <ul id="notes-list"></ul>
+</div>
+<div class="horizontal-line"></div>
+
+<div class="drawer drawer-end">
+    <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+        <!-- Page content here -->
+        <label for="my-drawer-4" class="drawer-button btn btn-primary">Open drawer</label>
+    </div>
+    <div class="drawer-side">
+        <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <!-- Sidebar content here -->
+            <li><a>Sidebar Item 1</a></li>
+            <li><a>Sidebar Item 2</a></li>
+        </ul>
+    </div>
 </div>
 <div class="horizontal-line"></div>
 
@@ -135,6 +163,7 @@
 <!-- html2canvas 라이브러리 추가 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 
+<!-- BackUp Capture Script-->
 <script>
     // 페이지 내에 캡처 버튼 추가
     const captureButton = document.createElement('button');
@@ -151,6 +180,7 @@
         });
     });
 </script>
+
 <div class="horizontal-line"></div>
 
 </body>
