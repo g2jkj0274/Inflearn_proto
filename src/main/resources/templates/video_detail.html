@@ -55,7 +55,7 @@
             <button class="btn" id="capture-button">Capture</button>
 
             <div id="curriculum-section" class="flex-grow p-4" style="display: none;">
-                <h4>Curriculum Videos</h4>
+                <h4 class="text-2xl font-bold">Curriculum Videos</h4>
                 <ul>
                     <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
                         <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
@@ -64,17 +64,17 @@
             </div>
 
             <div id="qna-section" class="flex-grow p-4" style="display: none;">
-                <h4>QnA</h4>
+                <h4 class="text-2xl font-bold">QnA</h4>
                 <ul id="qna-list"></ul>
-                <div id="toast-qna-editor"></div>
-                <button id="post-question">질문 작성</button>
+                <input type="text" id="qna-input" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />
+                <button class="btn" id="post-question">질문 작성</button>
             </div>
 
             <div id="notes-section" style="display: none;">
-                <h4>Notes</h4>
+                <h4 class="text-2xl font-bold">Notes</h4>
                 <div id="toast-editor"></div>
                 <br>
-                <button class="btn" id="save-note">노트입력</button>
+                <button class="btn" id="save-note">노트 작성</button>
                 <h4>Note-list</h4>
                 <ul id="notes-list"></ul>
             </div>
