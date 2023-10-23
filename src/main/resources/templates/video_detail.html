@@ -32,60 +32,56 @@
     Your browser does not support the video tag.
 </video>
 -->
-<h1 th:text="${video.title}"></h1>
+<h1 class="text-5xl font-bold" th:text="${video.title}"></h1>
 <video controls width="50%" height="auto">
     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
 </video>
-<img src="https://picsum.photos/seed/picsum/200/300" alt="TestImage">
 
-<div>
-    <button>커리큘럼</button>
-    <button id="show-qna">커뮤니티(QnA)</button>
-    <button id="show-notes">노트</button>
-</div>
-<div class="horizontal-line"></div>
-
-<h4>Curriculum Videos</h4>
-<ul>
-    <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
-        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
-    </li>
-</ul>
-<div class="horizontal-line"></div>
-
-<div id="qna-section" style="display: none;">
-    <h4>QnA</h4>
-    <ul id="qna-list"></ul>
-    <div id="toast-qna-editor"></div>
-    <button id="post-question">질문 작성</button>
-</div>
-<div class="horizontal-line"></div>
-
-<div id="notes-section" style="display: none;">
-    <h4>Notes</h4>
-    <div id="toast-editor"></div>
-    <br>
-    <button id="save-note">노트입력</button>
-    <h4>Note-list</h4>
-    <ul id="notes-list"></ul>
-</div>
 <div class="horizontal-line"></div>
 
 <div class="drawer drawer-end">
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
         <!-- Page content here -->
-        <label for="my-drawer-4" class="drawer-button btn btn-primary">Open drawer</label>
+        <label for="my-drawer-4" class="drawer-button btn btn-primary">side bar</label>
     </div>
     <div class="drawer-side">
         <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
             <!-- Sidebar content here -->
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
+            <button class="btn" id="show-curriculum">커리큘럼</button>
+            <button class="btn" id="show-qna">QnA</button>
+            <button class="btn" id="show-notes">노트</button>
+            <button class="btn" id="capture-button">Capture</button>
+
+            <div id="curriculum-section" class="flex-grow p-4" style="display: none;">
+                <h4>Curriculum Videos</h4>
+                <ul>
+                    <li th:each="curriculumVideo : ${video.lecture.lectureVideoList}">
+                        <a th:href="@{/lectures/{lectureId}/videos/{videoId}(lectureId=${video.lecture.lectureId}, videoId=${curriculumVideo.lectureVideoId})}" th:text="${curriculumVideo.title}"></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="qna-section" class="flex-grow p-4" style="display: none;">
+                <h4>QnA</h4>
+                <ul id="qna-list"></ul>
+                <div id="toast-qna-editor"></div>
+                <button id="post-question">질문 작성</button>
+            </div>
+
+            <div id="notes-section" style="display: none;">
+                <h4>Notes</h4>
+                <div id="toast-editor"></div>
+                <br>
+                <button class="btn" id="save-note">노트입력</button>
+                <h4>Note-list</h4>
+                <ul id="notes-list"></ul>
+            </div>
         </ul>
     </div>
 </div>
+
 <div class="horizontal-line"></div>
 
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
@@ -112,6 +108,11 @@
     document.querySelector("#post-question").addEventListener("click", function() {
         const questionContent = document.querySelector("#qna-input").value;
         saveQuestion(questionContent);
+    });
+
+    document.querySelector("#show-curriculum").addEventListener("click", function() {
+        const curriculumSection = document.querySelector("#curriculum-section");
+        curriculumSection.style.display = (curriculumSection.style.display === "none") ? "block" : "none";
     });
 
     document.querySelector("#show-qna").addEventListener("click", function() {
@@ -165,13 +166,8 @@
 
 <!-- BackUp Capture Script-->
 <script>
-    // 페이지 내에 캡처 버튼 추가
-    const captureButton = document.createElement('button');
-    captureButton.textContent = '페이지 캡처';
-    document.body.appendChild(captureButton);
-
     // 캡처 버튼 클릭 이벤트 핸들러 설정
-    captureButton.addEventListener('click', function() {
+    document.querySelector("#capture-button").addEventListener('click', function() {
         html2canvas(document.body).then(canvas => {
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/png');
@@ -180,8 +176,6 @@
         });
     });
 </script>
-
-<div class="horizontal-line"></div>
 
 </body>
 </html>
