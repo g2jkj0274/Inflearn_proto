@@ -2,15 +2,17 @@ package test.inflearn.Question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.inflearn.lecture.Lecture_Video;
 
 @Service
 public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
 
-    public Question saveQuestion(String content) {
+    public Question saveQuestion(String content, Lecture_Video videoId) {
         Question question = new Question();
-        question.setContent(content);
+        question.setQuestion(content);
+        question.setLectureVideo(videoId);
         return questionRepository.save(question);
     }
 

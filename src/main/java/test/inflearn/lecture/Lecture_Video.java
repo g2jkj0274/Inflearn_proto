@@ -3,6 +3,9 @@ package test.inflearn.lecture;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import test.inflearn.Question.Question;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,9 +13,9 @@ import lombok.Setter;
 public class Lecture_Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer videoId; // video_id -> videoId
+    private Integer videoId;
 
-    private Integer lectureVideoId; // lecture_video_id -> lectureVideoId
+    private Integer lectureVideoId;
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
@@ -23,4 +26,7 @@ public class Lecture_Video {
 
     @Column(columnDefinition = "TEXT")
     private String videoUrl; // video_url -> videoUrl
+
+    @OneToMany(mappedBy = "lectureVideo")
+    private List<Question> qnaList;  // qnaList 필드 추가
 }

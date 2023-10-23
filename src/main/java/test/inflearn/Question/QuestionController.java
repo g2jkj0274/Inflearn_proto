@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import test.inflearn.lecture.Lecture_Video;
 
 import java.util.Map;
 
@@ -18,10 +19,16 @@ public class QuestionController {
     @PostMapping("/save")
     public ResponseEntity<?> saveQuestion(@RequestBody Map<String, String> payload) {
         String content = payload.get("content");
-        if (content == null) {
-            return ResponseEntity.badRequest().body("Content cannot be null");
+        String videoIdStr = payload.get("videoId");
+
+        if (content == null || videoIdStr == null) {
+            return ResponseEntity.badRequest().body("Content or VideoId cannot be null");
         }
-        Question savedQuestion = questionService.saveQuestion(content);
+
+        Lecture_Video videoId = new Lecture_Video();
+        videoId.setVideoId((int) Long.parseLong(videoIdStr));
+
+        Question savedQuestion = questionService.saveQuestion(content, videoId);
         return ResponseEntity.ok().body("Question saved successfully");
     }
 

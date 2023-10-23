@@ -37,6 +37,9 @@
     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
 </video>
 
+<!-- 비디오 ID 저장을 위한 hidden input 추가 -->
+<input type="hidden" id="video-id" th:value="${video.videoId}" />
+
 <div class="horizontal-line"></div>
 
 <div class="drawer drawer-end">
@@ -65,6 +68,7 @@
 
             <div id="qna-section" class="flex-grow p-4" style="display: none;">
                 <h4 class="text-2xl font-bold">QnA</h4>
+                <h4>QnA-list</h4>
                 <ul id="qna-list"></ul>
                 <input type="text" id="qna-input" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />
                 <button class="btn" id="post-question">질문 작성</button>
@@ -108,6 +112,11 @@
     document.querySelector("#post-question").addEventListener("click", function() {
         const questionContent = document.querySelector("#qna-input").value;
         saveQuestion(questionContent);
+
+        const qnaList = document.querySelector("#qna-list");
+        const listItem = document.createElement("li");
+        listItem.textContent = questionContent;  // noteContent를 questionContent로 변경
+        qnaList.appendChild(listItem);  // notesList를 qnaList로 변경
     });
 
     document.querySelector("#show-curriculum").addEventListener("click", function() {
@@ -125,6 +134,7 @@
         notesSection.style.display = (notesSection.style.display === "none") ? "block" : "none";
     });
 
+    const videoId = document.querySelector("#video-id").value;
     function saveNote(content) {
         fetch('/api/notes/save', {
             method: 'POST',
@@ -147,7 +157,10 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ content: content })
+            body: JSON.stringify({
+                content: content,
+                videoId: videoId  // 비디오 ID를 포함시킵니다.
+            })
         })
         .then(response => response.json())
         .then(data => {
